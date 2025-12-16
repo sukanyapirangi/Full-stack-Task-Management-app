@@ -88,5 +88,7 @@ npm install
 npm start
 
 
-contact :
- --- sukanyapirangi18@gmail.com
+### OUTPUT
+
+<img width="1615" height="829" alt="Screenshot 2025-12-16 161808" src="https://github.com/user-attachments/assets/eed5525f-f895-4466-9b99-89ce49cea019" />
+<img width="1401" height="868" alt="Screenshot 2025-12-16 161829" src="https://github.com/user-attachments/assets/706b6419-ed7a-48df-91a8-5b073b076f77" />
