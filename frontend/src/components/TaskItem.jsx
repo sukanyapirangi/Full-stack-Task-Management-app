@@ -1,21 +1,25 @@
-const API_URL =  process.env.REACT_APP_API_URL || "http://localhost:5000/api/tasks";
+const API_URL = process.env.REACT_APP_API_URL;
 
-export default function TaskItem({ task, fetchTasks }) {
+export default function TaskItem({ task, onUpdate }) {
 
   const toggleTask = async () => {
     await fetch(`${API_URL}/${task.id}`, { method: "PUT" });
-    fetchTasks();
+    onUpdate();
   };
 
   const deleteTask = async () => {
     await fetch(`${API_URL}/${task.id}`, { method: "DELETE" });
-    fetchTasks();
+    onUpdate();
   };
 
   return (
     <div className={`task-card ${task.completed ? "completed" : ""}`}>
       <div className="left">
-        <input type="checkbox" checked={task.completed} onChange={toggleTask} />
+        <input
+          type="checkbox"
+          checked={task.completed}
+          onChange={toggleTask}
+        />
         <span>{task.title}</span>
       </div>
 
@@ -24,7 +28,9 @@ export default function TaskItem({ task, fetchTasks }) {
           {task.priority}
         </span>
 
-        {task.dueDate && <span className="date">{task.dueDate}</span>}
+        {task.dueDate && (
+          <span className="date">{task.dueDate}</span>
+        )}
 
         <button className="delete" onClick={deleteTask}>✖</button>
       </div>

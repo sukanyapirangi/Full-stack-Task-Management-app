@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-const API_URL = "http://localhost:5000/api/tasks" || process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
-export default function TaskForm({ fetchTasks }) {
+export default function TaskForm({ onTaskAdded }) {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("MEDIUM");
   const [dueDate, setDueDate] = useState("");
@@ -10,15 +10,24 @@ export default function TaskForm({ fetchTasks }) {
   const addTask = async () => {
     if (!title) return;
 
-    await fetch(API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, priority, dueDate }),
-    });
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title, priority, dueDate })
+      });
 
-    setTitle("");
-    setDueDate("");
-    fetchTasks();
+      if (!res.ok) throw new Error("Failed");
+
+      setTitle("");
+      setPriority("MEDIUM");
+      setDueDate("");
+      onTaskAdded();
+    } catch (err) {
+      alert("Failed to add task");
+    }
   };
 
   return (
@@ -41,7 +50,7 @@ export default function TaskForm({ fetchTasks }) {
         onChange={e => setDueDate(e.target.value)}
       />
 
-      <button onClick={addTask}>＋ Add Task</button>
+      <button onClick={addTask}>Add Task</button>
     </div>
   );
 }
