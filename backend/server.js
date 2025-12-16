@@ -7,100 +7,104 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Path to JSON file
 const DATA_FILE = path.join(__dirname, "data", "tasks.json");
 
-/* ---------------- HELPERS ---------------- */
+/* ---------------- HELPER FUNCTIONS ---------------- */
 
-const readTasks = async () => {
-  const data = await fs.promises.readFile(DATA_FILE, "utf-8");
-  return JSON.parse(data);
+// Read tasks from JSON file
+const readTasks = () => {
+  try {
+    if (!fs.existsSync(DATA_FILE)) {
+      return [];
+    }
+    const data = fs.readFileSync(DATA_FILE, "utf-8");
+    return JSON.parse(data || "[]");
+  } catch (err) {
+    console.error("Error reading tasks:", err);
+    return [];
+  }
 };
 
-const writeTasks = async (tasks) => {
-  await fs.promises.writeFile(
-    DATA_FILE,
-    JSON.stringify(tasks, null, 2)
-  );
+// Write tasks to JSON file
+const writeTasks = (tasks) => {
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(tasks, null, 2));
+  } catch (err) {
+    console.error("Error writing tasks:", err);
+  }
 };
-
-/* ---------------- GET ALL TASKS ---------------- */
-app.get("/api/tasks", async (req, res) => {
-  try {
-    const tasks = await readTasks();
-    res.status(200).json(tasks);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to read tasks" });
-  }
+  app.get("/", (req, res) => {
+  res.send("Task Manager Backend is running");
 });
 
-/* ---------------- CREATE TASK ---------------- */
-app.post("/api/tasks", async (req, res) => {
-  try {
-    const { title, priority = "MEDIUM", dueDate = "" } = req.body;
 
-    if (!title) {
-      return res.status(400).json({ message: "Title is required" });
-    }
+// GET all tasks
 
-    const tasks = await readTasks();
-
-    const newTask = {
-      id: Date.now(),
-      title,
-      completed: false,
-      priority,
-      dueDate
-    };
-
-    tasks.push(newTask);
-    await writeTasks(tasks);
-
-    res.status(201).json(newTask);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to create task" });
-  }
+app.get("/api/tasks", (req, res) => {
+  const tasks = readTasks();
+  res.status(200).json(tasks);
 });
 
-/* ---------------- TOGGLE COMPLETED ---------------- */
-app.put("/api/tasks/:id", async (req, res) => {
-  try {
-    const tasks = await readTasks();
-    const task = tasks.find(t => t.id == req.params.id);
+// CREATE a task
 
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
 
-    task.completed = !task.completed;
-    await writeTasks(tasks);
 
-    res.status(200).json(task);
-  } catch (err) {
-    res.status(500).json({ message: "Failed to update task" });
+app.post("/api/tasks", (req, res) => {
+  const { title, priority = "MEDIUM", dueDate = "" } = req.body;
+
+  if (!title) {
+    return res.status(400).json({ message: "Title is required" });
   }
+
+  const tasks = readTasks();
+
+  const newTask = {
+    id: Date.now(),
+    title,
+    completed: false,
+    priority,
+    dueDate
+  };
+
+  tasks.push(newTask);
+  writeTasks(tasks);
+
+  res.status(201).json(newTask);
 });
 
-/* ---------------- DELETE TASK ---------------- */
-app.delete("/api/tasks/:id", async (req, res) => {
-  try {
-    let tasks = await readTasks();
-    const initialLength = tasks.length;
+// TOGGLE task completion
 
-    tasks = tasks.filter(t => t.id != req.params.id);
 
-    if (tasks.length === initialLength) {
-      return res.status(404).json({ message: "Task not found" });
-    }
+app.put("/api/tasks/:id", (req, res) => {
+  const tasks = readTasks();
+  const task = tasks.find(t => t.id == req.params.id);
 
-    await writeTasks(tasks);
-    res.status(204).send();
-  } catch (err) {
-    res.status(500).json({ message: "Failed to delete task" });
+  if (!task) {
+    return res.status(404).json({ message: "Task not found" });
   }
+
+  task.completed = !task.completed;
+  writeTasks(tasks);
+
+  res.status(200).json(task);
 });
 
-/* ---------------- SERVER ---------------- */
+
+app.delete("/api/tasks/:id", (req, res) => {
+  const tasks = readTasks();
+  const filteredTasks = tasks.filter(t => t.id != req.params.id);
+
+  if (tasks.length === filteredTasks.length) {
+    return res.status(404).json({ message: "Task not found" });
+  }
+
+  writeTasks(filteredTasks);
+  res.status(204).send();
+});
+
 const PORT = 5000;
+
 app.listen(PORT, () => {
-  console.log(`✅ Backend running on http://localhost:${PORT}`);
+  console.log(`✅ Backend running at http://localhost:${PORT}`);
 });

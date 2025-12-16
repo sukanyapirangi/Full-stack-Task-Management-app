@@ -12,5 +12,33 @@
     "completed": false,
     "priority": "HIGH",
     "dueDate": "2025-12-17"
+  },
+  {
+    "id": 1765881566688,
+    "title": "meeting",
+    "completed": false,
+    "priority": "MEDIUM",
+    "dueDate": ""
+  },
+  {
+    "id": 1765881583761,
+    "title": "do exercice",
+    "completed": true,
+    "priority": "MEDIUM",
+    "dueDate": "2025-12-18"
+  },
+  {
+    "id": 1765881630103,
+    "title": "need to go movie",
+    "completed": true,
+    "priority": "MEDIUM",
+    "dueDate": "2025-12-21"
+  },
+  {
+    "id": 1765881655005,
+    "title": "START PREPARING FOR NODE.JS",
+    "completed": false,
+    "priority": "HIGH",
+    "dueDate": "2025-12-16"
   }
 ]
