@@ -37,16 +37,13 @@ Build a simple task management system that allows users to:
 
 ### Frontend
 - React.js
-- Functional Components
-- Hooks (`useState`, `useEffect`)
-- Fetch API
-- CSS (no UI framework)
+- CSS 
 
 ### Backend
 - Node.js
 - Express.js
 - RESTful APIs
-- JSON file persistence using File System
+- JSON 
 
 ---
 
