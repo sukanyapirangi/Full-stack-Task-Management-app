@@ -1,0 +1,172 @@
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+}
+
+/* THEMES */
+.app.light {
+  background: #f5f7fb;
+  color: #111;
+}
+
+.app.dark {
+  background: #0f1220;
+  color: #fff;
+}
+
+.container {
+  max-width: 520px;
+  margin: auto;
+  padding: 40px 20px;
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  position: relative;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  background: linear-gradient(135deg, #7f5af0, #ff7ac6);
+  border-radius: 16px;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.header h1 {
+  margin: 12px 0 4px;
+}
+
+.header p {
+  opacity: 0.7;
+}
+
+.theme-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* TASK FORM */
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.task-form input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+.task-form button {
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #7f5af0, #ff7ac6);
+  color: white;
+  cursor: pointer;
+}
+
+/* FILTERS */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filters button {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background: rgba(127, 90, 240, 0.15);
+}
+
+/* TASK CARD */
+.task-card {
+  background: rgba(255,255,255,0.8);
+  margin-bottom: 12px;
+  padding: 14px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark .task-card {
+  background: rgba(255,255,255,0.06);
+}
+
+.task-card .left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.task-card.completed span {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.delete {
+  background: transparent;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.task-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* PRIORITY BADGES */
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.HIGH {
+  background: #ff4d4f;
+  color: white;
+}
+
+.badge.MEDIUM {
+  background: #faad14;
+  color: white;
+}
+
+.badge.LOW {
+  background: #52c41a;
+  color: white;
+}
+
+.date {
+  font-size: 12px;
+  opacity: 0.7;
+}
