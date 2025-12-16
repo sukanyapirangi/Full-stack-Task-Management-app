@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = "http://localhost:5000/api/tasks" || process.env.REACT_APP_API_URL;
 
 export default function TaskForm({ fetchTasks }) {
   const [title, setTitle] = useState("");
